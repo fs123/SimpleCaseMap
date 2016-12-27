@@ -2,7 +2,7 @@
 export function requestLanes() {
     const lanes = [
         {
-            name: "Lane A",
+            name: "Stage A",
             processes: [
                 {
                     name: "Process A 1"
@@ -13,7 +13,7 @@ export function requestLanes() {
             ]
         },
         {
-            name: "Lane B",
+            name: "Stage B",
             processes: [
                 {
                     name: "Process B 1"
