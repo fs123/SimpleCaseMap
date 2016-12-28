@@ -36,6 +36,9 @@ export default function reducer(state={
             const { id, name } = action.payload;
             const newLanes = [...state.lanes];
             const laneToUpdate = newLanes.findIndex(lane => lane.id === id);
+            if (laneToUpdate < 0) {
+                return state;
+            }
             newLanes[laneToUpdate] = action.payload;
 
             return {
@@ -65,19 +68,14 @@ export default function reducer(state={
             return update(state, {lanes: {[laneIndex]: {processes: {[operation]: [newProcess]}}}});
         }
 
-        /*
         case "UPDATE_PROCESS": {
-            const { id, name } = action.payload;
-            const newLanes = [...state.lanes];
-            const laneToUpdate = newLanes.findIndex(lane => lane.id === id);
-            newLanes[laneToUpdate] = action.payload;
+            const { laneId, id, name } = action.payload;
 
-            return {
-                ...state,
-                tweets: newLanes,
-            }
+            const laneIndex = state.lanes.map(l => l.id).indexOf(laneId);
+            const processIndex = state.lanes[laneIndex].processes.map(l => l.id).indexOf(id);
+            return update(state, {lanes: {[laneIndex]: {processes: {[processIndex]: {name: {'$set': name}}}}}});
         }
-
+/*
         case "DELETE_PROCESS": {
             return state;
         }

@@ -23,7 +23,8 @@
     "redux-thunk": "^2.1.0",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.1",
-    "immutability-helper": "^2.0.0"
+    "immutability-helper": "^2.0.0",
+    "react-addons-css-transition-group": "^15.4.1"
   },
   "devDependencies": {},
   "scripts": {

@@ -53,6 +53,15 @@ export function deleteLane(id) {
     return { type: 'DELETE_TWEET', payload: id}
 }
 
+export function toggleEditProcess(laneId, process) {
+    return {
+        type: 'TOGGLE_EDIT_PROCESS',
+        payload: {
+            laneId,
+            process,
+        },
+    }
+}
 
 export function addProcess(laneId, id, name) {
     return {
@@ -65,10 +74,11 @@ export function addProcess(laneId, id, name) {
     }
 }
 
-export function updateProcess(id, name) {
+export function updateProcess(laneId, id, name) {
     return {
         type: 'UPDATE_PROCESS',
         payload: {
+            laneId,
             id,
             name,
         },

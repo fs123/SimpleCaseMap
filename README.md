@@ -10,6 +10,10 @@ $ npm install
 $ npm run dev
 ```
 
+## Version 2:
+- Improved layout structure
+- Add edit process support (with animation - juhuuuu)
+
 ## Version 1:
 - add stage
 - add process

@@ -4,7 +4,108 @@
     <meta charset="utf-8">
     <title>Simple Case Map</title>
     <!-- change this up! http://www.bootstrapcdn.com/bootswatch/ -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css" rel="stylesheet" >
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet" >
+    <style>
+
+      .caseMap {
+        margin: 0px 20px 20px 20px;
+      }
+
+      .desk, .desk-placeholder, .desk-placeholder:hover {
+        min-width: 270px;
+        display: inline-block;
+        height: 100%;
+        overflow: hidden;
+        min-height: 100px;
+        background-color: #e2e4e6;
+        box-shadow: 1px 1px 1px rgba(0,0,0,.5);
+        border-radius: 3px;
+        margin-left: 20px;
+        vertical-align: top;
+        padding: 0px 5px  20px  15px;
+      }
+      .desk-lane {
+        width: 250px;
+        display: inline-block;
+        height: 100%;
+        overflow: hidden;
+        min-height: 100px;
+        vertical-align: top;
+      }
+      .desk-edit {
+        width: 250px;
+        display: inline-block;
+        height: 100%;
+        overflow: hidden;
+        min-height: 100px;
+        vertical-align: top;
+      }
+
+      .newStage {
+        margin-top: 25px;
+        width: 70px;
+        display: inline-block;
+        height: 100%;
+        overflow: hidden;
+        min-height: 100px;
+      }
+
+      .newStage Button {
+        background-color: Transparent;
+        background-repeat: no-repeat;
+        border: none;
+        cursor:pointer;
+        overflow: hidden;
+        outline:none;
+        width: 90%;
+      }
+
+      .item {
+        width: 90%;
+        background: #fff;
+        min-height: 100px;
+        border-radius: 5px;
+        box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+        -webkit-transition: .15s;
+        transition: .15s;
+        cursor: pointer;
+        padding: 5px 5px  5px  5px;
+        margin: 5px 0px  15px  5px;
+      }
+
+      .newProcess {
+        text-align: center;
+      }
+
+      .newProcess Button {
+        background-color: Transparent;
+        background-repeat: no-repeat;
+        border: none;
+        cursor:pointer;
+        overflow: hidden;
+        outline:none;
+        width: 90%;
+      }
+
+      .newProcess-enter {
+        opacity: 0.01;
+      }
+
+      .newProcess-enter.newProcess-enter-active {
+        opacity: 1;
+        transition: opacity 500ms ease-in;
+      }
+
+      .newProcess-leave {
+        opacity: 1;
+      }
+
+      .newProcess-leave.newProcess-leave-active {
+        opacity: 0.01;
+        transition: opacity 300ms ease-in;
+      }
+
+    </style>
   </head>
 
   <body>
