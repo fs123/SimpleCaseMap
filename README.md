@@ -9,6 +9,8 @@ $ cd SimpleCaseMap
 $ npm install
 $ npm run dev
 ```
+## Version 3:
+- With TypeScript
 
 ## Version 2:
 - Improved layout structure
