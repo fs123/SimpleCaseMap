@@ -98,7 +98,7 @@ export class Lane extends React.Component<any, any> {
 }
 
 
-export class Process extends  React.Component<any, any> {
+export class Process extends React.Component<any, any> {
     static contextTypes = {
         store: React.PropTypes.object.isRequired,
     };

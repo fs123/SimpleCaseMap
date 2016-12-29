@@ -1,3 +1,14 @@
+
+//A redux action
+export interface Action<T>{
+  type: string;
+  payload: T;
+  error?: boolean;
+  meta?: any;
+}
+
+export default Action;
+
 export interface IStage {
     id:        string,
     name:      string,

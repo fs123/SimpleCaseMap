@@ -1,3 +1,10 @@
+import {Action, IStage, IProcess} from "../interfaces/interfaces"
+
+export const ADD_LANE = "ADD_LANE";
+export type ADD_LANE = { id: string, name: string }
+
+export const UPDATE_LANE = "UPDATE_LANE";
+export type UPDATE_LANE = { id: string, name: string }
 
 export function requestLanes() {
     const lanes = [
@@ -29,9 +36,9 @@ export function requestLanes() {
     }
 }
 
-export function addLane(id: string, name: string) {
+export function addLane(id: string, name: string) : Action<ADD_LANE> {
     return {
-        type: 'ADD_LANE',
+        type: ADD_LANE,
         payload: {
             id,
             name,
@@ -39,18 +46,14 @@ export function addLane(id: string, name: string) {
     }
 }
 
-export function updateLane(id: string, name: string) {
+export function updateLane(id: string, name: string) : Action<UPDATE_LANE> {
     return {
-        type: 'UPDATE_LANE',
+        type: UPDATE_LANE,
         payload: {
             id,
             name
         },
     }
-}
-
-export function deleteLane(id: string) {
-    return { type: 'DELETE_TWEET', payload: id}
 }
 
 export function toggleEditProcess(laneId: string, process: string) {
