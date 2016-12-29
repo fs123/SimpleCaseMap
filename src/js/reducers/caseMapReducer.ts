@@ -1,4 +1,5 @@
 import * as update from 'immutability-helper';
+import {IStage, IProcess} from "../interfaces/interfaces"
 
 /**
  * https://github.com/markerikson/redux/blob/structuring-reducers-page/docs/recipes/StructuringReducers.md
@@ -36,11 +37,12 @@ export default function reducer(state={
 
             const {laneId} = action.payload;
 
-            const newProcess = {
+            const newProcess : IProcess = {
                 id: action.payload.id,
-                name: action.payload.name};
+                name: action.payload.name
+            };
 
-            const laneIndex = state.lanes.map(l => l.id).indexOf(laneId);
+            const laneIndex : number = state.lanes.map(l => l.id).indexOf(laneId);
             // https://facebook.github.io/react/docs/update.html
             // https://github.com/kolodny/immutability-helper
             const operation = (!state.lanes[laneIndex].processes) ? '$set' : '$push';
@@ -50,8 +52,8 @@ export default function reducer(state={
         case "UPDATE_PROCESS": {
             const { laneId, id, name } = action.payload;
 
-            const laneIndex = state.lanes.map(l => l.id).indexOf(laneId);
-            const processIndex = state.lanes[laneIndex].processes.map(l => l.id).indexOf(id);
+            const laneIndex : number = state.lanes.map(l => l.id).indexOf(laneId);
+            const processIndex : number = state.lanes[laneIndex].processes.map(l => l.id).indexOf(id);
             return update(state, {lanes: {[laneIndex]: {processes: {[processIndex]: {name: {'$set': name}}}}}});
         }
 /*
