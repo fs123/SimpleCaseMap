@@ -1,4 +1,4 @@
-import update from 'immutability-helper';
+import * as update from 'immutability-helper';
 
 /**
  * https://github.com/markerikson/redux/blob/structuring-reducers-page/docs/recipes/StructuringReducers.md
@@ -32,27 +32,6 @@ export default function reducer(state={
                 lanes: [...state.lanes, action.payload],
             }
         }
-        case "UPDATE_LANE": {
-            const { id, name } = action.payload;
-            const newLanes = [...state.lanes];
-            const laneToUpdate = newLanes.findIndex(lane => lane.id === id);
-            if (laneToUpdate < 0) {
-                return state;
-            }
-            newLanes[laneToUpdate] = action.payload;
-
-            return {
-                ...state,
-                tweets: newLanes,
-            }
-        }
-        case "DELETE_LANE": {
-            return {
-                ...state,
-                tweets: state.tweets.filter(lane => lane.id !== action.payload),
-            }
-        }
-
         case "ADD_PROCESS": {
 
             const {laneId} = action.payload;

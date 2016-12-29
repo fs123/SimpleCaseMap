@@ -1,8 +1,8 @@
-import React from "react"
+import * as React from "react"
 
 import {CaseMap} from "./CaseMap";
 
-export default class Layout extends React.Component {
+export default class Layout extends React.Component<any, any> {
 
   render() {
     return

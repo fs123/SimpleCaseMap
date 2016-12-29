@@ -1,4 +1,4 @@
-import update from 'immutability-helper';
+import * as update from 'immutability-helper';
 
 /**
  * https://github.com/markerikson/redux/blob/structuring-reducers-page/docs/recipes/StructuringReducers.md

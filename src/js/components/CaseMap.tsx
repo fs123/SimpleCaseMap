@@ -1,20 +1,16 @@
-import React from "react"
+import * as React from "react"
 import { connect } from "react-redux"
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
+import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
 import { requestLanes, addLane, addProcess, updateProcess, toggleEditProcess } from "../actions/caseMapActions"
 
-@connect((store) => {
+/*@connect((store) => {
     return {
         caseMap: store.caseMap,
         caseMapUi: store.caseMapUi
     };
-})
-export default class CaseMap extends React.Component {
-
-    newLane() {
-        this.props.dispatch(addLane(new Date().getTime(), "New Stage"));
-    }
+})*/
+export class CaseMap extends React.Component<any, any> {
 
     requestLanes(){
         this.props.dispatch(requestLanes())
@@ -33,14 +29,29 @@ export default class CaseMap extends React.Component {
             <h1>Simple Case Map</h1>
             <div>{lanes}
                 <div className="newStage">
-                    <button onClick={this.newLane.bind(this)}>+</button>
+                    <button onClick={this.props.newLane.bind(this)}>+</button>
                 </div>
             </div>
         </div>
     }
+
 }
 
-export class Lane extends React.Component {
+const mapStateToProps = (state) => ({
+        caseMap: state.caseMap,
+        caseMapUi: state.caseMapUi
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    newLane: () => {
+        dispatch(addLane(new Date().getTime(), "New Stage"));
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CaseMap);
+
+
+export class Lane extends React.Component<any, any> {
     static contextTypes = {
         store: React.PropTypes.object.isRequired,
     };
@@ -86,7 +97,7 @@ export class Lane extends React.Component {
 }
 
 
-export class Process extends React.Component {
+export class Process extends  React.Component<any, any> {
     static contextTypes = {
         store: React.PropTypes.object.isRequired,
     };
@@ -110,7 +121,7 @@ export class Process extends React.Component {
     }
 }
 
-export class ProcessEdit extends React.Component {
+export class ProcessEdit extends React.Component<any, any> {
     static contextTypes = {
         store: React.PropTypes.object.isRequired,
     };
