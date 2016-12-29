@@ -44,7 +44,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     newLane: () => {
-        dispatch(addLane(new Date().getTime(), "New Stage"));
+        dispatch(addLane(String(new Date().getTime()), "New Stage"));
     },
 });
 
@@ -58,7 +58,7 @@ export class Lane extends React.Component<any, any> {
 
     newProcess() {
         const { lane } = this.props;
-        this.context.store.dispatch(addProcess(lane.id, new Date().getTime(), "New Process"));
+        this.context.store.dispatch(addProcess(lane.id, String(new Date().getTime()), "New Process"));
     }
 
     render() {

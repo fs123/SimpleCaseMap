@@ -29,7 +29,7 @@ export function requestLanes() {
     }
 }
 
-export function addLane(id, name) {
+export function addLane(id: string, name: string) {
     return {
         type: 'ADD_LANE',
         payload: {
@@ -39,7 +39,7 @@ export function addLane(id, name) {
     }
 }
 
-export function updateLane(id, name) {
+export function updateLane(id: string, name: string) {
     return {
         type: 'UPDATE_LANE',
         payload: {
@@ -49,11 +49,11 @@ export function updateLane(id, name) {
     }
 }
 
-export function deleteLane(id) {
+export function deleteLane(id: string) {
     return { type: 'DELETE_TWEET', payload: id}
 }
 
-export function toggleEditProcess(laneId, process) {
+export function toggleEditProcess(laneId: string, process: string) {
     return {
         type: 'TOGGLE_EDIT_PROCESS',
         payload: {
@@ -63,7 +63,7 @@ export function toggleEditProcess(laneId, process) {
     }
 }
 
-export function addProcess(laneId, id, name) {
+export function addProcess(laneId: string, id: string, name: string) {
     return {
         type: 'ADD_PROCESS',
         payload: {
@@ -74,7 +74,7 @@ export function addProcess(laneId, id, name) {
     }
 }
 
-export function updateProcess(laneId, id, name) {
+export function updateProcess(laneId: string, id: string, name: string) {
     return {
         type: 'UPDATE_PROCESS',
         payload: {
@@ -85,6 +85,6 @@ export function updateProcess(laneId, id, name) {
     }
 }
 
-export function deleteProcess(id) {
+export function deleteProcess(id: string) {
     return { type: 'DELETE_PROCESS', payload: id}
 }
