@@ -45,7 +45,7 @@ export default function reducer(state={
             const laneIndex : number = state.lanes.map(l => l.id).indexOf(laneId);
             // https://facebook.github.io/react/docs/update.html
             // https://github.com/kolodny/immutability-helper
-            const operation = (!state.lanes[laneIndex].processes) ? '$set' : '$push';
+            const operation : string = (!state.lanes[laneIndex].processes) ? '$set' : '$push';
             return update(state, {lanes: {[laneIndex]: {processes: {[operation]: [newProcess]}}}});
         }
 
@@ -56,11 +56,6 @@ export default function reducer(state={
             const processIndex : number = state.lanes[laneIndex].processes.map(l => l.id).indexOf(id);
             return update(state, {lanes: {[laneIndex]: {processes: {[processIndex]: {name: {'$set': name}}}}}});
         }
-/*
-        case "DELETE_PROCESS": {
-            return state;
-        }
-         */
     }
 
     return state

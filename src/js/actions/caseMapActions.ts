@@ -6,6 +6,9 @@ export type ADD_LANE = { id: string, name: string }
 export const UPDATE_LANE = "UPDATE_LANE";
 export type UPDATE_LANE = { id: string, name: string }
 
+export const ADD_PROCESS = "ADD_PROCESS";
+export type ADD_PROCESS = { laneId: string, id: string, name: string }
+
 export function requestLanes() {
     const lanes = [
         {
@@ -66,9 +69,9 @@ export function toggleEditProcess(laneId: string, process: string) {
     }
 }
 
-export function addProcess(laneId: string, id: string, name: string) {
+export function addProcess(laneId: string, id: string, name: string) : Action<ADD_PROCESS> {
     return {
-        type: 'ADD_PROCESS',
+        type: ADD_PROCESS,
         payload: {
             laneId,
             id,
@@ -88,6 +91,3 @@ export function updateProcess(laneId: string, id: string, name: string) {
     }
 }
 
-export function deleteProcess(id: string) {
-    return { type: 'DELETE_PROCESS', payload: id}
-}
