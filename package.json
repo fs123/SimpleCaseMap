@@ -4,12 +4,15 @@
   "description": "",
   "main": "webpack.config.js",
   "dependencies": {
+    "@types/core-js": "^0.9.35",
     "@types/react": "^0.14.55",
     "@types/react-dom": "^0.14.19",
     "@types/react-redux": "^4.4.35",
     "axios": "^0.12.0",
+    "core-js": "^2.4.1",
     "immutability-helper": "^2.0.0",
     "react": "^15.4.1",
+    "react-addons-css-transition-group": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^5.0.1",
     "redux": "^3.6.0",
@@ -17,8 +20,7 @@
     "redux-promise-middleware": "^3.2.0",
     "redux-thunk": "^2.1.0",
     "webpack": "^1.12.9",
-    "webpack-dev-server": "^1.14.1",
-    "react-addons-css-transition-group": "^15.4.1"
+    "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.0.0-beta.17",

@@ -2,6 +2,7 @@ import * as React from "react"
 import {IStage, IProcess} from "../interfaces/interfaces"
 import { connect } from "react-redux"
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
+import 'core-js/fn/array/find'
 
 import { requestLanes, addLane, addProcess, updateProcess, toggleEditProcess } from "../actions/caseMapActions"
 
