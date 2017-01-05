@@ -4,7 +4,7 @@ import * as createLogger from "redux-logger";
 import thunk from "redux-thunk"
 import * as createPromise from "redux-promise-middleware";
 
-import reducer from "./reducers"
+import reducer from "./store/modules/reducers"
 
 const middleware = applyMiddleware(createPromise(), thunk, createLogger())
 

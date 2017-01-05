@@ -2,7 +2,8 @@ import * as React from "react"
 import { connect } from "react-redux"
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
-import { requestLanes, addLane, addProcess, updateProcess, toggleEditProcess } from "../actions/caseMapActions"
+import {StageActions, ProcessActions, CaseMapActions} from "../store/modules/casemap"
+import {EditActions} from "../store/modules/casemapui";
 
 /*@connect((store) => {
     return {
@@ -12,16 +13,24 @@ import { requestLanes, addLane, addProcess, updateProcess, toggleEditProcess } f
 })*/
 export class CaseMap extends React.Component<any, any> {
 
-    requestLanes(){
-        this.props.dispatch(requestLanes())
+    componentWillMount() {
+        window['caseMap'] = {loadCaseMap: this.loadCaseMap.bind(this)};
+    }
+
+    componentWillUnmount() {
+        window['caseMap'] = null;
+    }
+
+    storeToIvy() {
+        window['ivy']['storeCaseMap'](JSON.stringify(this.props.caseMap));
+    }
+
+    loadCaseMap(caseMap) {
+        this.props.loadCaseMap(caseMap);
     }
 
     render() {
         const { caseMap } = this.props;
-
-        if (!caseMap) {
-            return <button onClick={this.requestLanes.bind(this)}>load stages</button>
-        }
 
         const lanes = caseMap.lanes.map(lane => <Lane key={lane.id} lane={lane} />);
 
@@ -32,9 +41,9 @@ export class CaseMap extends React.Component<any, any> {
                     <button onClick={this.props.newLane.bind(this)}>+</button>
                 </div>
             </div>
+            <div><br/><br/><button onClick={this.storeToIvy.bind(this)}>save back to ivy</button></div>
         </div>
     }
-
 }
 
 const mapStateToProps = (state) => ({
@@ -44,8 +53,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     newLane: () => {
-        dispatch(addLane(new Date().getTime(), "New Stage"));
+        dispatch(StageActions.addStage(new Date().getTime(), "New Stage"));
     },
+    loadCaseMap: (caseMap) => {
+        dispatch(CaseMapActions.caseMapLoad(caseMap));
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CaseMap);
@@ -58,7 +70,7 @@ export class Lane extends React.Component<any, any> {
 
     newProcess() {
         const { lane } = this.props;
-        this.context.store.dispatch(addProcess(lane.id, new Date().getTime(), "New Process"));
+        this.context.store.dispatch(ProcessActions.addProcess(lane.id, new Date().getTime(), "New Process"));
     }
 
     render() {
@@ -70,7 +82,8 @@ export class Lane extends React.Component<any, any> {
         var edit = null;
         if (caseMapUi.editType == 'P'
          && caseMapUi.editPayload.laneId == lane.id) {
-            const processId = caseMapUi.editPayload.process.id;
+            const processId = caseMapUi.editPayload.processId;
+            // TODO: replace find, it has a execution time of O(n)
             const process = lane.processes.find(p => p.id == processId);
 
             edit = <div className="desk-edit">
@@ -105,7 +118,7 @@ export class Process extends  React.Component<any, any> {
     toggleEditProcess() {
         const { process, lane } = this.props;
         console.log("edit " + process.name);
-        this.context.store.dispatch(toggleEditProcess(lane.id, process));
+        this.context.store.dispatch(EditActions.editProcess(lane.id, process.id));
     }
 
     render() {
@@ -128,7 +141,7 @@ export class ProcessEdit extends React.Component<any, any> {
 
     handleChange(event) {
         const { lane, process } = this.props;
-        this.context.store.dispatch(updateProcess(
+        this.context.store.dispatch(ProcessActions.updateProcess(
                 lane.id,
                 process.id,
                 event.target.value));

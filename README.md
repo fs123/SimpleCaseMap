@@ -10,6 +10,10 @@ $ npm install
 $ npm run dev
 ```
 ## Version 3:
+- Clean Code
+- Fixed stage edit bug in JavaFX Browser
+
+## Version 3:
 - With TypeScript
 
 ## Version 2:
