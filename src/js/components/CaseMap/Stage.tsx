@@ -4,7 +4,7 @@ import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group' // 
 
 import {StageActions, ProcessActions, CaseMapActions} from "../../store/modules/casemap"
 import {EditActions} from "../../store/modules/casemapui";
-import {Process} from "./Process";
+import Process from "./Process";
 import {ProcessEdit} from "./ProcessEdit";
 
 export class Stage extends React.Component<any, any> {

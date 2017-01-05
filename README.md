@@ -9,6 +9,9 @@ $ cd SimpleCaseMap
 $ npm install
 $ npm run dev
 ```
+## Version 5:
+- add drag and drop of Processes
+
 ## Version 4:
 - Clean Code
 - Fixed stage edit bug in JavaFX Browser

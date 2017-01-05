@@ -6,12 +6,6 @@ import {StageActions, ProcessActions, CaseMapActions} from "../../store/modules/
 import {EditActions} from "../../store/modules/casemapui";
 import {Stage} from "./Stage";
 
-/*@connect((store) => {
- return {
- caseMap: store.caseMap,
- caseMapUi: store.caseMapUi
- };
- })*/
 export class CaseMap extends React.Component<any, any> {
 
     componentWillMount() {
