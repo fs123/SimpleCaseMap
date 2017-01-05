@@ -9,7 +9,7 @@ $ cd SimpleCaseMap
 $ npm install
 $ npm run dev
 ```
-## Version 3:
+## Version 4:
 - Clean Code
 - Fixed stage edit bug in JavaFX Browser
 
