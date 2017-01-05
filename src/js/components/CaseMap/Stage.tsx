@@ -2,14 +2,29 @@ import * as React from "react"
 import { connect } from "react-redux"
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
+import { DropTarget } from 'react-dnd';
+
 import {StageActions, ProcessActions, CaseMapActions} from "../../store/modules/casemap"
 import {EditActions} from "../../store/modules/casemapui";
 import Process from "./Process";
 import {ProcessEdit} from "./ProcessEdit";
+import {ItemTypes} from "./Constants";
+import PropTypes = React.PropTypes;
 
 export class Stage extends React.Component<any, any> {
     static contextTypes = {
         store: React.PropTypes.object.isRequired,
+    };
+
+    static propTypes = {
+
+        process: PropTypes.object.isRequired,
+        lane: PropTypes.object.isRequired,
+
+        // Injected by React DnD:
+        isDragging: PropTypes.bool.isRequired,
+        isOver: PropTypes.bool.isRequired,
+        connectDropTarget: PropTypes.func.isRequired,
     };
 
     newProcess() {
@@ -52,3 +67,24 @@ export class Stage extends React.Component<any, any> {
         </div>;
     }
 }
+
+const processDndTarget = {
+    canDrop() {
+        return false;
+    },
+    hover(props, monitor, component) {
+        if (!monitor.isOver({ shallow: true }))
+        {
+            return;
+        }
+
+    }
+};
+
+function collectDndTarget(connect, monitor) {
+    return {
+        connectDropTarget: connect.dropTarget(),
+        isOver: monitor.isOver()
+    };
+}
+export default DropTarget(ItemTypes.PROCESS, processDndTarget, collectDndTarget)(Stage);
