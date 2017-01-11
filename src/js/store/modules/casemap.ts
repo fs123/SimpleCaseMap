@@ -10,7 +10,7 @@ export const STAGE_DELETE = 'STAGE_DELETE';
 export const PROCESS_ADD = 'PROCESS_ADD';
 export const PROCESS_UPDATE = 'PROCESS_UPDATE';
 export const PROCESS_DELETE = 'PROCESS_DELETE';
-export const PROCESS_MOVE = 'PROCESS_DELETE';
+export const PROCESS_MOVE = 'PROCESS_MOVE';
 
 
 // https://github.com/erikras/react-redux-universal-hot-example
@@ -84,13 +84,14 @@ export class ProcessActions {
         }
     }
 
+    /*
     static deleteProcess(id) {
         return {
             type: PROCESS_DELETE,
             payload: id
         }
     }
-
+    */
     static moveProcess(
         sourceStageId: number, sourceProcessId: number,
         targedStageId: number, targetProcessId: number) {
@@ -114,7 +115,25 @@ const INITIAL_STATE = {
             processes: [
                 {
                     id: 1,
-                    name: "First Process",
+                    name: "Process A",
+                },
+                {
+                    id: 2,
+                    name: "Process B",
+                }
+            ]
+        },
+        {
+            id: 2,
+            name: "Second Stage",
+            processes: [
+                {
+                    id: 3,
+                    name: "Process N",
+                },
+                {
+                    id: 4,
+                    name: "Process M",
                 }
             ]
         }

@@ -8,21 +8,60 @@ import {CASEMAP_LOAD} from "./casemap";
 
 const EDIT_PROCESS = 'EDIT_PROCESS';
 
+const DND_PROCESS_STARTED = 'DND_PROCESS_STARTED';
+const DND_PROCESS_ENDED = 'DND_PROCESS_ENDED';
+const DND_HOVER_OVER_STAGE = 'DND_HOVER_OVER_STAGE';
+const DND_HOVER_OVER_PROCESS = 'DND_HOVER_OVER_PROCESS';
+
 export class EditActions {
-    static editProcess(laneId, processId) {
+    static editProcess(stageId, processId) {
         return {
             type: EDIT_PROCESS,
             payload: {
-                laneId,
+                stageId,
                 processId,
             },
+        }
+    }
+
+
+    static dndProcessStarted(processId) {
+        return {
+            type: DND_PROCESS_STARTED,
+            payload: {
+                processId
+            }
+        }
+    }
+    static dndProcessEnded() {
+        return {
+            type: DND_PROCESS_ENDED,
+            payload: {}
+        }
+    }
+    static dndHoverOverStage(stageId) {
+        return {
+            type: DND_HOVER_OVER_STAGE,
+            payload: {
+                stageId
+            }
+        }
+    }
+    static dndHoverOverProcess(processId, after=false) {
+        return {
+            type: DND_HOVER_OVER_PROCESS,
+            payload: {
+                processId
+            }
         }
     }
 }
 
 const initialState = {
     editType: null, // S = Stage, P = Process
-    editPayload: null
+    editPayload: null,
+    dndProcessId: null,
+    dndOverProcessId: null
 };
 
 let redusers = {
@@ -38,11 +77,41 @@ let redusers = {
                 editPayload: null
             }
         }
-        const {laneId, processId} = payload;
+        const {stageId, processId} = payload;
         return {
             ...state,
             editType: "P",
-            editPayload: {laneId, processId}
+            editPayload: {stageId, processId}
+        }
+    },
+    [DND_PROCESS_STARTED]: (state, payload) => {
+        return {
+            ...state,
+            editType: null,
+            editPayload: null,
+            dndProcessId: payload.processId
+        }
+    },
+    [DND_PROCESS_ENDED]: (state, payload) => {
+        return {
+            ...state,
+            dndOverProcessId: null,
+            dndProcessId: null
+        }
+    },
+    [DND_HOVER_OVER_PROCESS]: (state, payload) => {
+        if (state.dndOverProcessId == payload.processId) {
+            return state;
+        }
+        return {
+            ...state,
+            dndOverProcessId: payload.processId
+        }
+    },
+    [DND_HOVER_OVER_STAGE]: (state, payload) => {
+        return {
+            ...state,
+            dndOverProcessId: null
         }
     }
 };

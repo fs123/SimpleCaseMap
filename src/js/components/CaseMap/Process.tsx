@@ -14,12 +14,16 @@ import {EditActions} from "../../store/modules/casemapui";
  */
 const processDndSource = {
     beginDrag(props) {
+        props.dndStarted(props.process.id);
         return {
             stageId: props.lane.id,
             processId: props.process.id
         };
     },
     endDrag(props, monitor, component) {
+
+        props.dndEnded();
+
         if (!monitor.didDrop()) {
             return;
         }
@@ -45,6 +49,12 @@ const processDndTarget = {
         const processId = props.process.id;
         const stageId = props.lane.id;
         return {stageId, processId};
+    },
+    hover(props, monitor, component) {
+        if (!monitor.canDrop()) {
+            return;
+        }
+        props.dndHoverOver(props.process.id)
     }
 };
 
@@ -65,7 +75,7 @@ function collectDndSource(connect, monitor) {
     };
 }
 
-export class Process extends  React.Component<any, any> {
+class Process extends  React.Component<any, any> {
     static propTypes = {
 
         process: PropTypes.object.isRequired,
@@ -86,16 +96,25 @@ export class Process extends  React.Component<any, any> {
     }
 
     render() {
-        const { isDragging, connectDragSource, connectDropTarget, process } = this.props;
-        return connectDropTarget(connectDragSource(<div className="item" onClick={this.props.editProcess.bind(this)}>
+        const { isDragging, connectDragSource, connectDropTarget, process, dndProcessId, dndOverProcessId } = this.props;
+        const dndAbove = (dndProcessId && dndOverProcessId && dndProcessId != dndOverProcessId && dndOverProcessId == process.id);
+
+        const processDndPlaceholder = <div className="itemPlaceholder"></div>;
+
+        return connectDropTarget(connectDragSource(<div>
+            {dndAbove ? processDndPlaceholder : ''}
+            <div className="item" onClick={this.props.editProcess.bind(this)}>
                 <h4>{process.name}</h4>
-            </div>
+            </div></div>
         ))
     }
 }
 
 const mapStateToProps = (state, props) => {
-    return {};
+    return {
+        dndProcessId: state.caseMapUi.dndProcessId,
+        dndOverProcessId: state.caseMapUi.dndOverProcessId
+    };
 };
 
 const mapDispatchToProps = (dispatch, myProps) => ({
@@ -108,6 +127,15 @@ const mapDispatchToProps = (dispatch, myProps) => ({
         dispatch(ProcessActions.moveProcess(
             lane.id, process.id,
             toLaneId, afterProcessId))
+    },
+    dndStarted: (processId) => {
+        dispatch(EditActions.dndProcessStarted(processId))
+    },
+    dndEnded: () => {
+        dispatch(EditActions.dndProcessEnded());
+    },
+    dndHoverOver: (processId, after) => {
+        dispatch(EditActions.dndHoverOverProcess(processId, after))
     }
 });
 

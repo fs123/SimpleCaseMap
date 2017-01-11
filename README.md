@@ -11,6 +11,8 @@ $ npm run dev
 ```
 ## Version 5:
 - add drag and drop of Processes
+- add visual feedback for dnd
+![visual feedback for dnd](doc/version5_dnd_visualfeedback.png)
 
 ## Version 4:
 - Clean Code

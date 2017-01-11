@@ -40,7 +40,7 @@ export class Stage extends React.Component<any, any> {
 
         var edit = null;
         if (caseMapUi.editType == 'P'
-            && caseMapUi.editPayload.laneId == lane.id) {
+            && caseMapUi.editPayload.stageId == lane.id) {
             const processId = caseMapUi.editPayload.processId;
             // TODO: replace find, it has a execution time of O(n)
             const process = lane.processes.find(p => p.id == processId);
