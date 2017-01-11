@@ -10,6 +10,8 @@ export const STAGE_DELETE = 'STAGE_DELETE';
 export const PROCESS_ADD = 'PROCESS_ADD';
 export const PROCESS_UPDATE = 'PROCESS_UPDATE';
 export const PROCESS_DELETE = 'PROCESS_DELETE';
+export const PROCESS_MOVE = 'PROCESS_MOVE';
+
 
 // https://github.com/erikras/react-redux-universal-hot-example
 
@@ -82,10 +84,25 @@ export class ProcessActions {
         }
     }
 
+    /*
     static deleteProcess(id) {
         return {
             type: PROCESS_DELETE,
             payload: id
+        }
+    }
+    */
+    static moveProcess(
+        sourceStageId: number, sourceProcessId: number,
+        targedStageId: number, targetProcessId: number) {
+        return {
+            type: PROCESS_MOVE,
+            payload: {
+                sourceStageId,
+                sourceProcessId,
+                targedStageId,
+                targetProcessId
+            }
         }
     }
 }
@@ -98,7 +115,25 @@ const INITIAL_STATE = {
             processes: [
                 {
                     id: 1,
-                    name: "First Process",
+                    name: "Process A",
+                },
+                {
+                    id: 2,
+                    name: "Process B",
+                }
+            ]
+        },
+        {
+            id: 2,
+            name: "Second Stage",
+            processes: [
+                {
+                    id: 3,
+                    name: "Process N",
+                },
+                {
+                    id: 4,
+                    name: "Process M",
                 }
             ]
         }
@@ -131,6 +166,25 @@ let redusers = {
         const laneIndex = state.lanes.map(l => l.id).indexOf(laneId);
         const processIndex = state.lanes[laneIndex].processes.map(l => l.id).indexOf(id);
         return update(state, {lanes: {[laneIndex]: {processes: {[processIndex]: {name: {'$set': name}}}}}});
+    },
+    [PROCESS_MOVE]: (state, payload) => {
+
+        const {sourceStageId, sourceProcessId, targedStageId, targetProcessId} = payload;
+
+        // remove process
+        const removeProcessOnStageIndex = state.lanes.map(l => l.id).indexOf(sourceStageId);
+        const removeProcessIndex = state.lanes[removeProcessOnStageIndex].processes.map(l => l.id).indexOf(sourceProcessId);
+
+        const processToMove = state.lanes[removeProcessOnStageIndex].processes[removeProcessIndex];
+
+        state = update(state, {lanes: {[removeProcessOnStageIndex]: {processes: {'$splice': [[removeProcessIndex, 1]]}}}});
+
+        // add process
+        const addProcessOnStageIndex = state.lanes.map(l => l.id).indexOf(targedStageId);
+        const addProcessIndex = state.lanes[addProcessOnStageIndex].processes.map(l => l.id).indexOf(targetProcessId);
+        state = update(state, {lanes: {[addProcessOnStageIndex]: {processes: {'$splice': [[addProcessIndex, 0, processToMove]]}}}});
+
+        return state;
     }
 };
 
