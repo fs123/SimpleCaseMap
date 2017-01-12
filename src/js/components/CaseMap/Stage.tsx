@@ -38,7 +38,7 @@ export class Stage extends React.Component<any, any> {
 
         const processes = (!lane.processes) ? [] : lane.processes.map(process => <Process key={process.id} lane={lane} process={process} />);
 
-        var edit = null;
+        let edit = null;
         if (caseMapUi.editType == 'P'
             && caseMapUi.editPayload.stageId == lane.id) {
             const processId = caseMapUi.editPayload.processId;
@@ -73,8 +73,7 @@ const processDndTarget = {
         return false;
     },
     hover(props, monitor, component) {
-        if (!monitor.isOver({ shallow: true }))
-        {
+        if (!monitor.isOver({ shallow: true })) {
             return;
         }
 

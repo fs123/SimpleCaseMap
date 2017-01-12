@@ -1,0 +1,19 @@
+{
+    // Add linting rules we care about
+    // See: https://palantir.github.io/tslint/usage/tslint-json/
+    // or use tslint:recommended for recommended rules
+    "rules": {
+        "no-duplicate-variable": true,
+        "no-eval": true,
+        "no-trailing-whitespace": true,
+        "one-line": [true, "check-open-brace", "check-whitespace"],
+        "no-var-keyword": true
+    },
+    "jsRules": {
+        "indent": [true, "spaces"],
+        "no-duplicate-variable": true,
+        "no-eval": true,
+        "no-trailing-whitespace": true,
+        "one-line": [true, "check-open-brace", "check-whitespace"]
+    }
+}
