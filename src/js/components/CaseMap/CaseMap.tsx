@@ -2,6 +2,8 @@ import * as React from "react"
 import { connect } from "react-redux"
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
+import {List, ListItem} from 'material-ui/List';
+
 import {StageActions, ProcessActions, CaseMapActions} from "../../store/modules/casemap"
 import {EditActions} from "../../store/modules/casemapui";
 import {Stage} from "./Stage";

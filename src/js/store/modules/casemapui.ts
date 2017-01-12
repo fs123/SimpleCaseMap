@@ -58,8 +58,8 @@ export class EditActions {
 }
 
 const initialState = {
-    editType: null, // S = Stage, P = Process
-    editPayload: null,
+    editType: "P", // S = Stage, P = Process
+    editPayload: {stageId:1, processId:1},
     dndProcessId: null,
     dndOverProcessId: null
 };
