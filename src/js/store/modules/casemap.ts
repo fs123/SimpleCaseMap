@@ -74,13 +74,13 @@ export class ProcessActions {
         }
     }
 
-    static updateProcess(laneId, id, name) {
+    static updateProcess(laneId, id, process) {
         return {
             type: PROCESS_UPDATE,
             payload: {
                 laneId,
                 id,
-                name,
+                process,
             },
         }
     }
@@ -130,7 +130,7 @@ const INITIAL_STATE = {
                     id: 1,
                     name: "Process A",
                     description: "",
-                    icon: "",
+                    icon: "glyphicon glyphicon-heart",
                     optionA: true,
                     optionB: false,
                     optionC: false,
@@ -139,7 +139,7 @@ const INITIAL_STATE = {
                     id: 2,
                     name: "Process B",
                     description: "",
-                    icon: "",
+                    icon: "glyphicon glyphicon-star",
                     optionA: false,
                     optionB: false,
                     optionC: false,
@@ -154,7 +154,7 @@ const INITIAL_STATE = {
                     id: 3,
                     name: "Process N",
                     description: "",
-                    icon: "",
+                    icon: "glyphicon glyphicon-flag",
                     optionA: true,
                     optionB: false,
                     optionC: false,
@@ -163,7 +163,7 @@ const INITIAL_STATE = {
                     id: 4,
                     name: "Process M",
                     description: "",
-                    icon: "",
+                    icon: "glyphicon glyphicon-fire",
                     optionA: false,
                     optionB: false,
                     optionC: false,
@@ -195,10 +195,10 @@ let redusers = {
         return update(state, {lanes: {[laneIndex]: {processes: {[operation]: [newProcess]}}}});
     },
     [PROCESS_UPDATE]: (state, payload) => {
-        const {laneId, id, name} = payload;
+        const {laneId, id, process} = payload;
         const laneIndex = state.lanes.map(l => l.id).indexOf(laneId);
         const processIndex = state.lanes[laneIndex].processes.map(l => l.id).indexOf(id);
-        return update(state, {lanes: {[laneIndex]: {processes: {[processIndex]: {name: {'$set': name}}}}}});
+        return update(state, {lanes: {[laneIndex]: {processes: {'$splice': [[processIndex, 1, process]]}}}});
     },
     [PROCESS_UPDATE_FIELD]: (state, payload) => {
         const {laneId, id, name, value} = payload;

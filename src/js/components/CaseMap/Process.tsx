@@ -9,7 +9,6 @@ import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
 import FontIcon from 'material-ui/FontIcon';
 
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
 
 import { DragSource, DropTarget } from 'react-dnd';
 import { ItemTypes } from './Constants';
@@ -108,11 +107,7 @@ class Process extends  React.Component<any, any> {
         const dndAbove = (dndProcessId && dndOverProcessId && dndProcessId != dndOverProcessId && dndOverProcessId == process.id);
 
         const processDndPlaceholder = <div className="itemPlaceholder"></div>;
-
-        const icon = <FontIcon
-            className="glyphicon glyphicon-hand-right"
-        />;
-
+        const icon = <FontIcon className={process.icon} />;
         const iconStyles = {
             marginRight: 5,
         };
@@ -132,6 +127,8 @@ class Process extends  React.Component<any, any> {
             options.unshift(process.description);
         }
 
+        const style = this.props.idEditing ? {backgroundColor:'rgba(0, 188, 212, 0.098039)'} : null;
+        //const style = this.props.idEditing ? {backgroundColor:'rgba(0, 0, 0, 0.2)'} : null;
 
         const item = (<div>
                 <ListItem
@@ -142,6 +139,7 @@ class Process extends  React.Component<any, any> {
                     leftIcon={icon}
                     secondaryText={options}
                     secondaryTextLines={options.length>2 ? 2 : 1}
+                    style={style}
                 ></ListItem>
             <Divider inset={true} />
         </div>);
@@ -190,7 +188,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch, myProps) => ({
     editProcess: () => {
         const {lane, process} = myProps;
-        return dispatch(EditActions.editProcess(lane.id, process.id));
+        return dispatch(EditActions.editProcess(lane.id, process.id, process));
     },
     moveTo: (toLaneId, afterProcessId) => {
         const {lane, process} = myProps;

@@ -6,7 +6,9 @@ import {CASEMAP_LOAD} from "./casemap";
  * https://github.com/reactjs/redux/blob/master/docs/recipes/StructuringReducers.md
  */
 
-const EDIT_PROCESS = 'EDIT_PROCESS';
+const PROCESS_EDIT = 'PROCESS_EDIT';
+const PROCESS_SAVE = 'PROCESS_SAVE';
+const PROCESS_CANCEL = 'PROCESS_CANCEL';
 
 const DND_PROCESS_STARTED = 'DND_PROCESS_STARTED';
 const DND_PROCESS_ENDED = 'DND_PROCESS_ENDED';
@@ -14,16 +16,28 @@ const DND_HOVER_OVER_STAGE = 'DND_HOVER_OVER_STAGE';
 const DND_HOVER_OVER_PROCESS = 'DND_HOVER_OVER_PROCESS';
 
 export class EditActions {
-    static editProcess(stageId, processId) {
+    static editProcess(stageId, processId, cancelState) {
         return {
-            type: EDIT_PROCESS,
+            type: PROCESS_EDIT,
             payload: {
                 stageId,
                 processId,
+                cancelState
             },
         }
     }
-
+    static saveEdit() {
+        return {
+            type: PROCESS_SAVE,
+            payload: {}
+        }
+    }
+    static cancelEdit() {
+        return {
+            type: PROCESS_CANCEL,
+            payload: {}
+        }
+    }
 
     static dndProcessStarted(processId) {
         return {
@@ -55,6 +69,7 @@ export class EditActions {
             }
         }
     }
+
 }
 
 const initialState = {
@@ -68,7 +83,7 @@ let redusers = {
     [CASEMAP_LOAD]: () => {
         return initialState
     },
-    [EDIT_PROCESS]: (state, payload) => {
+    [PROCESS_EDIT]: (state, payload) => {
         if (state.editType == "P"
             && state.editPayload.processId == payload.processId) {
             return {
@@ -77,11 +92,27 @@ let redusers = {
                 editPayload: null
             }
         }
-        const {stageId, processId} = payload;
-        return {
+        const {stageId, processId, cancelState} = payload;
+        state = {
             ...state,
             editType: "P",
-            editPayload: {stageId, processId}
+            editPayload: {stageId, processId, cancelState}
+
+        };
+        return state;
+    },
+    [PROCESS_SAVE]: (state, payload) => {
+        return {
+            ...state,
+            editType: null,
+            editPayload: null
+        }
+    },
+    [PROCESS_CANCEL]: (state, payload) => {
+        return {
+            ...state,
+            editType: null,
+            editPayload: null
         }
     },
     [DND_PROCESS_STARTED]: (state, payload) => {

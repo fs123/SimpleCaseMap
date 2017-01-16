@@ -9,14 +9,14 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet" >
     <style>
 
-      body {
+      html, body {
         font-family: 'Roboto', sans-serif;
+        height: 100%;
       }
 
       .caseMap {
         margin: 0px 20px 20px 20px;
         overflow-x: auto;
-        height: 100%;
         white-space: nowrap;
         zoom: 1;
       }
@@ -24,12 +24,10 @@
       .desk, .desk-placeholder, .desk-placeholder:hover {
         min-width: 270px;
         display: inline-block;
-        height: 100%;
         min-height: 100px;
-        border-radius: 3px;
-        margin-left: 20px;
+        margin-left: 1px;
         vertical-align: top;
-        padding: 0px 5px  20px  15px;
+        padding: 0px 10px  20px  5px;
       }
       .desk-lane {
         width: 250px;
@@ -41,18 +39,19 @@
       }
       .desk-edit {
         margin-top: 45px;
-        margin-left: 25px;
-        margin-right: 0px;
+        padding-left: 25px;
+        padding-right: 10px;
         min-width: 250px;
         display: inline-block;
         height: 100%;
         min-height: 350px;
         vertical-align: top;
+        background-color: rgba(0, 188, 212, 0.098039);
       }
 
       .newStage {
         margin-top: 25px;
-        width: 70px;
+        width: 170px;
         display: inline-block;
         height: 100%;
         overflow: hidden;
