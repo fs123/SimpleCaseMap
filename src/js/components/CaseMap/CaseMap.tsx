@@ -2,6 +2,9 @@ import * as React from "react"
 import { connect } from "react-redux"
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
+import {List, ListItem} from 'material-ui/List';
+import FlatButton from 'material-ui/FlatButton';
+
 import {StageActions, ProcessActions, CaseMapActions} from "../../store/modules/casemap"
 import {EditActions} from "../../store/modules/casemapui";
 import {Stage} from "./Stage";
@@ -31,12 +34,12 @@ export class CaseMap extends React.Component<any, any> {
 
         return <div className="caseMap">
             <h1>Simple Case Map</h1>
-            <div>{lanes}
-                <div className="newStage">
-                    <button onClick={this.props.newLane.bind(this)}>+</button>
-                </div>
+            {lanes}
+            <div className="newStage">
+                <FlatButton onClick={this.props.newLane.bind(this)} label="+ add a stage" labelStyle={{textTransform: 'initial'}}/>
             </div>
-            <div><br/><br/><button onClick={this.storeToIvy.bind(this)}>save back to ivy</button></div>
+
+            <div><br/><br/><br/><button onClick={this.storeToIvy.bind(this)}>save back to ivy</button></div>
         </div>
     }
 }

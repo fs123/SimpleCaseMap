@@ -2,6 +2,12 @@ import * as React from "react"
 import { connect } from "react-redux"
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
+import {List, ListItem, makeSelectable} from 'material-ui/List';
+import FlatButton from 'material-ui/FlatButton';
+import Paper from 'material-ui/Paper';
+import Subheader from 'material-ui/Subheader';
+import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+
 import { DropTarget } from 'react-dnd';
 
 import {StageActions, ProcessActions, CaseMapActions} from "../../store/modules/casemap"
@@ -36,7 +42,9 @@ export class Stage extends React.Component<any, any> {
         const { lane } = this.props;
         const { caseMapUi } = this.context.store.getState();
 
-        const processes = (!lane.processes) ? [] : lane.processes.map(process => <Process key={process.id} lane={lane} process={process} />);
+        const editProcessId = caseMapUi.editPayload ? caseMapUi.editPayload.processId : null;
+        const processes = (!lane.processes) ? [] : lane.processes.map(process => <Process key={process.id} index={process.id} id={process.id} lane={lane} process={process} idEditing={editProcessId == process.id} />);
+
 
         let edit = null;
         if (caseMapUi.editType == 'P'
@@ -50,6 +58,31 @@ export class Stage extends React.Component<any, any> {
             </div>
         }
 
+        //const SelectableList = makeSelectable(List);
+
+        return <div className="desk">
+            <div className="desk-lane">
+                <div>
+                    <h3>{lane.name}</h3>
+                    <List>
+                        {processes}
+                    </List>
+                </div>
+                <div className="newProcess"><br/>
+                    <FlatButton onClick={this.newProcess.bind(this)} label="+ add a process" labelStyle={{textTransform: 'initial'}}/>
+                </div>
+            </div>
+            <ReactCSSTransitionGroup
+                transitionName="newProcess"
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={250}>
+                {edit && edit}
+            </ReactCSSTransitionGroup>
+        </div>;
+                /*
+                * <button onClick={this.newProcess.bind(this)}>+ add a process</button>
+                * */
+        /*
         return <div className="desk">
             <div className="desk-lane">
                 <h2>{lane.name}</h2>
@@ -65,6 +98,7 @@ export class Stage extends React.Component<any, any> {
                 {edit && edit}
             </ReactCSSTransitionGroup>
         </div>;
+        */
     }
 }
 

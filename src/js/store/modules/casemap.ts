@@ -9,6 +9,7 @@ export const STAGE_DELETE = 'STAGE_DELETE';
 
 export const PROCESS_ADD = 'PROCESS_ADD';
 export const PROCESS_UPDATE = 'PROCESS_UPDATE';
+export const PROCESS_UPDATE_FIELD = 'PROCESS_UPDATE_FIELD';
 export const PROCESS_DELETE = 'PROCESS_DELETE';
 export const PROCESS_MOVE = 'PROCESS_MOVE';
 
@@ -73,13 +74,25 @@ export class ProcessActions {
         }
     }
 
-    static updateProcess(laneId, id, name) {
+    static updateProcess(laneId, id, process) {
         return {
             type: PROCESS_UPDATE,
             payload: {
                 laneId,
                 id,
+                process,
+            },
+        }
+    }
+
+    static updateProcessField(laneId, id, name, value) {
+        return {
+            type: PROCESS_UPDATE_FIELD,
+            payload: {
+                laneId,
+                id,
                 name,
+                value
             },
         }
     }
@@ -116,10 +129,20 @@ const INITIAL_STATE = {
                 {
                     id: 1,
                     name: "Process A",
+                    description: "",
+                    icon: "glyphicon glyphicon-heart",
+                    optionA: true,
+                    optionB: false,
+                    optionC: false,
                 },
                 {
                     id: 2,
                     name: "Process B",
+                    description: "",
+                    icon: "glyphicon glyphicon-star",
+                    optionA: false,
+                    optionB: false,
+                    optionC: false,
                 }
             ]
         },
@@ -130,10 +153,20 @@ const INITIAL_STATE = {
                 {
                     id: 3,
                     name: "Process N",
+                    description: "",
+                    icon: "glyphicon glyphicon-flag",
+                    optionA: true,
+                    optionB: false,
+                    optionC: false,
                 },
                 {
                     id: 4,
                     name: "Process M",
+                    description: "",
+                    icon: "glyphicon glyphicon-fire",
+                    optionA: false,
+                    optionB: false,
+                    optionC: false,
                 }
             ]
         }
@@ -162,10 +195,16 @@ let redusers = {
         return update(state, {lanes: {[laneIndex]: {processes: {[operation]: [newProcess]}}}});
     },
     [PROCESS_UPDATE]: (state, payload) => {
-        const {laneId, id, name} = payload;
+        const {laneId, id, process} = payload;
         const laneIndex = state.lanes.map(l => l.id).indexOf(laneId);
         const processIndex = state.lanes[laneIndex].processes.map(l => l.id).indexOf(id);
-        return update(state, {lanes: {[laneIndex]: {processes: {[processIndex]: {name: {'$set': name}}}}}});
+        return update(state, {lanes: {[laneIndex]: {processes: {'$splice': [[processIndex, 1, process]]}}}});
+    },
+    [PROCESS_UPDATE_FIELD]: (state, payload) => {
+        const {laneId, id, name, value} = payload;
+        const laneIndex = state.lanes.map(l => l.id).indexOf(laneId);
+        const processIndex = state.lanes[laneIndex].processes.map(l => l.id).indexOf(id);
+        return update(state, {lanes: {[laneIndex]: {processes: {[processIndex]: {[name]: {'$set': value}}}}}});
     },
     [PROCESS_MOVE]: (state, payload) => {
 

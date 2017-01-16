@@ -3,6 +3,13 @@ import { PropTypes } from 'react';
 import { connect } from "react-redux"
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
+import {List, ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import FontIcon from 'material-ui/FontIcon';
+
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+
 import { DragSource, DropTarget } from 'react-dnd';
 import { ItemTypes } from './Constants';
 
@@ -45,15 +52,15 @@ const processDndSource = {
 };
 
 const processDndTarget = {
+    canDrop(props, monitor) {
+        return monitor.getItem().processId != props.process.id;
+    },
     drop(props, monitor, component) {
         const processId = props.process.id;
         const stageId = props.lane.id;
         return {stageId, processId};
     },
     hover(props, monitor, component) {
-        if (!monitor.canDrop()) {
-            return;
-        }
         props.dndHoverOver(props.process.id)
     }
 };
@@ -100,13 +107,74 @@ class Process extends  React.Component<any, any> {
         const dndAbove = (dndProcessId && dndOverProcessId && dndProcessId != dndOverProcessId && dndOverProcessId == process.id);
 
         const processDndPlaceholder = <div className="itemPlaceholder"></div>;
+        const icon = <FontIcon className={process.icon} />;
+        const iconStyles = {
+            marginRight: 5,
+        };
+        let options = [];
+        if (process.optionA) {
+            options.push(<span className="glyphicon glyphicon-play-circle" aria-hidden="true" style={iconStyles}/>)
+        }
 
+        if (process.optionB) {
+            options.push(<span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style={iconStyles}/>)
+        }
+        if (process.description)
+        {
+            if (options.length > 0) {
+            options.unshift(<br/>);
+            }
+            options.unshift(process.description);
+        }
+
+        const style = this.props.idEditing ? {backgroundColor:'rgba(0, 188, 212, 0.098039)'} : null;
+        //const style = this.props.idEditing ? {backgroundColor:'rgba(0, 0, 0, 0.2)'} : null;
+
+        const item = (<div>
+                <ListItem
+                    key={process.id}
+                    value={process.id}
+                    onClick={this.props.editProcess.bind(this)}
+                    primaryText={process.name}
+                    leftIcon={icon}
+                    secondaryText={options}
+                    secondaryTextLines={options.length>2 ? 2 : 1}
+                    style={style}
+                ></ListItem>
+            <Divider inset={true} />
+        </div>);
+
+        return connectDropTarget(connectDragSource(<div>
+                {dndAbove ? processDndPlaceholder : ''}
+                {item}
+            </div>
+        ))
+
+        /*
         return connectDropTarget(connectDragSource(<div>
             {dndAbove ? processDndPlaceholder : ''}
             <div className="item" onClick={this.props.editProcess.bind(this)}>
                 <h4>{process.name}</h4>
             </div></div>
         ))
+        */
+/*
+        const card = (<Card>
+            <CardHeader
+                title={process.name}
+            />
+            <CardActions>
+                <FlatButton label="Action1" />
+                <FlatButton label="Action2" />
+            </CardActions>
+        </Card>);
+
+        return connectDropTarget(connectDragSource(<div>
+                {dndAbove ? processDndPlaceholder : ''}
+                {card}
+            </div>
+            ))
+*/
     }
 }
 
@@ -120,7 +188,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch, myProps) => ({
     editProcess: () => {
         const {lane, process} = myProps;
-        return dispatch(EditActions.editProcess(lane.id, process.id));
+        return dispatch(EditActions.editProcess(lane.id, process.id, process));
     },
     moveTo: (toLaneId, afterProcessId) => {
         const {lane, process} = myProps;
