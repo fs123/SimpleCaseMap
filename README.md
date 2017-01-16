@@ -9,6 +9,12 @@ $ cd SimpleCaseMap
 $ npm install
 $ npm run dev
 ```
+## Version 6:
+- material ui (ui feedback, which process is editing)
+- icon, toggles, ...
+- cancel of process edit (thanks to immutable state)
+![material ui](doc/version6_materialui.png)
+
 ## Version 5:
 - add drag and drop of Processes
 - add visual feedback for dnd
