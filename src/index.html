@@ -4,13 +4,19 @@
     <meta charset="utf-8">
     <title>Simple Case Map</title>
     <!-- change this up! http://www.bootstrapcdn.com/bootswatch/ -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet" >
     <style>
+
+      html, body {
+        font-family: 'Roboto', sans-serif;
+        height: 100%;
+      }
 
       .caseMap {
         margin: 0px 20px 20px 20px;
         overflow-x: auto;
-        height: 100%;
         white-space: nowrap;
         zoom: 1;
       }
@@ -18,15 +24,10 @@
       .desk, .desk-placeholder, .desk-placeholder:hover {
         min-width: 270px;
         display: inline-block;
-        height: 100%;
-        overflow: hidden;
         min-height: 100px;
-        background-color: #e2e4e6;
-        box-shadow: 1px 1px 1px rgba(0,0,0,.5);
-        border-radius: 3px;
-        margin-left: 20px;
+        margin-left: 1px;
         vertical-align: top;
-        padding: 0px 5px  20px  15px;
+        padding: 0px 10px  20px  5px;
       }
       .desk-lane {
         width: 250px;
@@ -37,17 +38,20 @@
         vertical-align: top;
       }
       .desk-edit {
-        width: 250px;
+        margin-top: 45px;
+        padding-left: 25px;
+        padding-right: 10px;
+        min-width: 250px;
         display: inline-block;
         height: 100%;
-        overflow: hidden;
-        min-height: 100px;
+        min-height: 350px;
         vertical-align: top;
+        background-color: rgba(0, 188, 212, 0.098039);
       }
 
       .newStage {
         margin-top: 25px;
-        width: 70px;
+        width: 170px;
         display: inline-block;
         height: 100%;
         overflow: hidden;
