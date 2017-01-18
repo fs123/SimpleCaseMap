@@ -18,12 +18,16 @@ import {ItemTypes} from "./Constants";
 import PropTypes = React.PropTypes;
 
 export class Stage extends React.Component<any, any> {
+    constructor() {
+        super();
+        this.deleteStage = this.deleteStage.bind(this);
+    }
+
     static contextTypes = {
         store: React.PropTypes.object.isRequired,
     };
 
     static propTypes = {
-
         process: PropTypes.object.isRequired,
         lane: PropTypes.object.isRequired,
 
@@ -38,13 +42,17 @@ export class Stage extends React.Component<any, any> {
         this.context.store.dispatch(ProcessActions.addProcess(lane.id, new Date().getTime(), "New Process"));
     }
 
+    deleteStage() {
+        const { lane } = this.props;
+        this.context.store.dispatch(StageActions.deleteStage(lane.id));
+    }
+
     render() {
         const { lane } = this.props;
         const { caseMapUi } = this.context.store.getState();
 
         const editProcessId = caseMapUi.editPayload ? caseMapUi.editPayload.processId : null;
         const processes = (!lane.processes) ? [] : lane.processes.map(process => <Process key={process.id} index={process.id} id={process.id} lane={lane} process={process} idEditing={editProcessId == process.id} />);
-
 
         let edit = null;
         if (caseMapUi.editType == 'P'
@@ -63,7 +71,7 @@ export class Stage extends React.Component<any, any> {
         return <div className="desk">
             <div className="desk-lane">
                 <div>
-                    <h3>{lane.name}</h3>
+                    <div><h3>{lane.name}</h3> <FlatButton onClick={this.deleteStage} label="x" labelStyle={{textTransform: 'initial'}}/></div>
                     <List>
                         {processes}
                     </List>

@@ -184,6 +184,12 @@ let redusers = {
             lanes: [...state.lanes, payload],
         }
     },
+    [STAGE_DELETE]: (state, payload) => {
+        return {
+            ...state,
+            lanes: state.lanes.filter((lane) => lane.id !== payload),
+        }
+    },
     [PROCESS_ADD]: (state, payload) => {
         const {laneId, id, name} = payload;
         const newProcess = {
